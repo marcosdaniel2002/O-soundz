@@ -1,0 +1,27 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+  .progressBar {
+    @apply border-none bg-slate-400;
+
+    &:hover {
+      @apply cursor-pointer;
+      &::-moz-range-progress {
+        @apply bg-green-500;
+      }
+      &::-moz-range-thumb {
+        @apply opacity-100;
+      }
+    }
+
+    &::-moz-range-thumb {
+      @apply size-4 appearance-none border-none opacity-0;
+    }
+
+    &::-moz-range-progress {
+      @apply bg-white;
+    }
+  }
+}
