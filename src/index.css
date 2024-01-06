@@ -4,7 +4,7 @@
 
 @layer components {
   .progressBar {
-    @apply border-none bg-slate-400;
+    @apply h-1 appearance-none border-none bg-slate-400;
 
     &:hover {
       @apply cursor-pointer;

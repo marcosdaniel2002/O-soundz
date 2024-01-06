@@ -5,7 +5,7 @@ import Player from "../features/player/Player";
 function AppLayout() {
   return (
     <div className="grid h-dvh grid-rows-[1fr_auto]">
-      <main className="">
+      <main className="overflow-scroll">
         <Outlet />
       </main>
 
