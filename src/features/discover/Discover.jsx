@@ -1,9 +1,11 @@
+import Header from "./Header";
+import Table from "./Table";
+
 function Discover() {
   return (
-    <div className="">
-      <div className="size-full h-96 bg-red-600">a</div>
-      <div className="size-full h-96 bg-green-600">a</div>
-      <div className="size-full h-96 bg-blue-600">a</div>
+    <div className="px-4 py-8">
+      <Header />
+      <Table />
     </div>
   );
 }
