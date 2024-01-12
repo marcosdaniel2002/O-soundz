@@ -19,7 +19,7 @@ export async function getApiKey() {
   }
 }
 
-export async function getTopGlobalPlaylist(apiKey) {
+export async function getTopGlobalPlaylist(apiKey, setApiKey) {
   try {
     const res = await fetch(
       "https://api.spotify.com/v1/playlists/37i9dQZEVXbMDoHDwVN2tF",
@@ -29,10 +29,14 @@ export async function getTopGlobalPlaylist(apiKey) {
         },
       },
     );
-    console.log(res);
+
+    if (!apiKey || res.status === 401) {
+      // api key expired
+      const token = await getApiKey();
+      setApiKey(token);
+    }
 
     const data = await res.json();
-    console.log(data);
     return data;
   } catch (e) {
     console.error(e);

@@ -1,12 +1,17 @@
 import TableRow from "./TableRow";
-
+import Spinner from "../../ui/Spinner";
 import { useGetTopSongs } from "./useGetTopSongs";
 
 function Table() {
   const { isLoading, data } = useGetTopSongs();
-  console.log(isLoading);
-  console.log(data);
 
+  if (isLoading)
+    return (
+      <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
+        <Spinner size={16} />
+      </div>
+    );
+  const tracks = data.tracks.items;
   return (
     <table className="w-full">
       <thead>
@@ -19,8 +24,15 @@ function Table() {
         </tr>
       </thead>
       <tbody>
-        {Array.from({ length: 50 }, (_, i) => (
-          <TableRow key={i} number={i} />
+        {tracks.map((track, i) => (
+          <TableRow
+            key={track.track.id}
+            id={track.track.id}
+            number={i}
+            name={track.track.name}
+            artist={track.track.artists.at(0).name}
+            image={track.track.album.images.at(2).url}
+          />
         ))}
       </tbody>
     </table>

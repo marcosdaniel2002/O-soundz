@@ -8,7 +8,6 @@ import Search from "./features/search/Search";
 import ForYou from "./features/foryou/ForYou";
 import Likes from "./features/likes/Likes";
 import Playlist from "./features/playlist/Playlist";
-import { ApiKeyProvider } from "./context/ApiKeyContext";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -45,12 +44,10 @@ const router = createBrowserRouter([
 
 function App() {
   return (
-    <ApiKeyProvider>
-      <QueryClientProvider client={queryClient}>
-        <ReactQueryDevtools initialIsOpen={false} />
-        <RouterProvider router={router} />
-      </QueryClientProvider>
-    </ApiKeyProvider>
+    <QueryClientProvider client={queryClient}>
+      <ReactQueryDevtools initialIsOpen={false} />
+      <RouterProvider router={router} />
+    </QueryClientProvider>
   );
 }
 

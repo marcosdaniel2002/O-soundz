@@ -2,31 +2,28 @@ import { FaHeart } from "react-icons/fa";
 import { BiDotsHorizontalRounded } from "react-icons/bi";
 import { FaPlay } from "react-icons/fa";
 
-function TableRow({ number }) {
+function TableRow({ number, id, name, artist, image }) {
   return (
     <tr className="group/overlay odd:bg-neutral-700/30 hover:bg-neutral-600/40">
       <td className="w-8 p-1.5 text-center text-xs text-white">{number + 1}</td>
-      <td className="p-1.5 text-xs text-white">
+      <td className="max-w-48 truncate p-1.5 text-xs text-white">
         <div className="flex items-center gap-4">
-          <div className="relative size-11">
-            <img
-              src="https://is1-ssl.mzstatic.com/image/thumb/Music116/v4/97/c7/f2/97c7f256-6db0-a45b-a786-f58dc928c970/196871404495.jpg/400x400cc.jpg"
-              alt=""
-            />
+          <div className="relative size-11 min-w-11">
+            <img src={image} alt="" />
             <button className="invisible absolute top-0 flex size-full items-center justify-center bg-neutral-900/80 group-hover/overlay:visible">
               <FaPlay />
             </button>
           </div>
           <div className="flex flex-col">
             <a className="hover:underline" href="">
-              Agora Hills
+              {name}
             </a>
-            <span className="text-neutral-300">Doja cat</span>
+            <span className="text-neutral-300">{artist}</span>
           </div>
         </div>
       </td>
       <td className="hidden text-base text-neutral-400 lg:table-cell">
-        Teddy Swims
+        {artist}
       </td>
       <td className="w-12 text-center text-neutral-300">
         <button className="group/like p-1.5">
