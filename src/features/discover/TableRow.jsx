@@ -25,6 +25,9 @@ function TableRow({ number }) {
           </div>
         </div>
       </td>
+      <td className="hidden text-base text-neutral-400 lg:table-cell">
+        Teddy Swims
+      </td>
       <td className="w-12 text-center text-neutral-300">
         <button className="group/like p-1.5">
           <FaHeart className="size-5 transition-all group-hover/like:size-6" />

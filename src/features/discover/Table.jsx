@@ -1,13 +1,19 @@
 import TableRow from "./TableRow";
 
+import { useGetTopSongs } from "./useGetTopSongs";
+
 function Table() {
+  const { isLoading, data } = useGetTopSongs();
+  console.log(isLoading);
+  console.log(data);
+
   return (
     <table className="w-full">
-      <thead className="hidden">
-        <tr>
-          <th>#</th>
-          <th>Song</th>
-          <th></th>
+      <thead>
+        <tr className="hidden text-left text-white lg:table-row [&>th]:py-5">
+          <th className="text-center">#</th>
+          <th className="px-2">Song</th>
+          <th>Artist</th>
           <th></th>
           <th></th>
         </tr>
