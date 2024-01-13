@@ -8,6 +8,7 @@ import Search from "./features/search/Search";
 import ForYou from "./features/foryou/ForYou";
 import Likes from "./features/likes/Likes";
 import Playlist from "./features/playlist/Playlist";
+import { SongProvider } from "./context/SongContext";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -46,7 +47,9 @@ function App() {
   return (
     <QueryClientProvider client={queryClient}>
       <ReactQueryDevtools initialIsOpen={false} />
-      <RouterProvider router={router} />
+      <SongProvider>
+        <RouterProvider router={router} />
+      </SongProvider>
     </QueryClientProvider>
   );
 }

@@ -11,6 +11,7 @@ function Table() {
         <Spinner size={16} />
       </div>
     );
+
   const tracks = data.tracks.items;
   return (
     <table className="w-full">
@@ -32,6 +33,7 @@ function Table() {
             name={track.track.name}
             artist={track.track.artists.at(0).name}
             image={track.track.album.images.at(2).url}
+            track={track.track.preview_url}
           />
         ))}
       </tbody>

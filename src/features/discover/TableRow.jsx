@@ -1,8 +1,11 @@
 import { FaHeart } from "react-icons/fa";
 import { BiDotsHorizontalRounded } from "react-icons/bi";
 import { FaPlay } from "react-icons/fa";
+import { useSong } from "../../context/SongContext";
 
-function TableRow({ number, id, name, artist, image }) {
+function TableRow({ number, id, name, artist, image, track }) {
+  const { setCurrentSong } = useSong();
+
   return (
     <tr className="group/overlay odd:bg-neutral-700/30 hover:bg-neutral-600/40">
       <td className="w-8 p-1.5 text-center text-xs text-white">{number + 1}</td>
@@ -10,7 +13,18 @@ function TableRow({ number, id, name, artist, image }) {
         <div className="flex items-center gap-4">
           <div className="relative size-11 min-w-11">
             <img src={image} alt="" />
-            <button className="invisible absolute top-0 flex size-full items-center justify-center bg-neutral-900/80 group-hover/overlay:visible">
+            <button
+              onClick={() =>
+                setCurrentSong({
+                  id,
+                  name,
+                  image,
+                  track,
+                  artist,
+                })
+              }
+              className="invisible absolute top-0 flex size-full items-center justify-center bg-neutral-900/80 group-hover/overlay:visible"
+            >
               <FaPlay />
             </button>
           </div>
