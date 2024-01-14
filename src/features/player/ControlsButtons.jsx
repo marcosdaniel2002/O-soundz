@@ -3,35 +3,23 @@ import { TbSwitch2 } from "react-icons/tb";
 import { FaBackwardStep } from "react-icons/fa6";
 import { FaStepForward } from "react-icons/fa";
 import { FaRepeat } from "react-icons/fa6";
-import { useEffect, useState } from "react";
 import { FaPause } from "react-icons/fa6";
 import ButtonPlayer from "../../ui/ButtonPlayer";
+import { useEffect, useState } from "react";
 
 function ControlsButtons({ audioRef }) {
   const [isPlay, setIsPlay] = useState(false);
-  const [isAudio, setIsAudio] = useState(false);
 
   useEffect(
     function () {
-      // const currentAudio = document.getElementById()
-      if (audioRef.current != null) {
-        setIsAudio(true);
+      if (isPlay) {
+        audioRef.current.play();
       } else {
-        setIsAudio(false);
+        audioRef.current.pause();
       }
     },
-    [audioRef],
+    [audioRef, isPlay],
   );
-
-  function playPause() {
-    if (isPlay) {
-      audioRef.current.pause();
-      setIsPlay(false);
-    } else {
-      audioRef.current.play();
-      setIsPlay(true);
-    }
-  }
 
   return (
     <div className="flex items-center gap-2">
@@ -41,7 +29,7 @@ function ControlsButtons({ audioRef }) {
       <ButtonPlayer>
         <FaBackwardStep />
       </ButtonPlayer>
-      <ButtonPlayer main={true} onClick={playPause} disabled={!isAudio}>
+      <ButtonPlayer main={true} onClick={() => setIsPlay((prev) => !prev)}>
         {isPlay ? <FaPause /> : <FaPlay />}
       </ButtonPlayer>
       <ButtonPlayer>

@@ -1,60 +1,47 @@
-import { useRef } from "react";
 import { useEffect } from "react";
 import { fancyDurationFormat } from "../../helpers/fancyDurationFormat";
 
-function ProgressBar({ audioRef }) {
-  const progressRef = useRef(null);
-  const leftSpan = useRef(null);
-  const rightSpan = useRef(null);
-
-  console.log("render");
+function ProgressBar({
+  audioRef,
+  progressBarRef,
+  timeProgress,
+  duration,
+  setTimeProgress,
+}) {
+  function handleProgressChange() {
+    audioRef.current.currentTime = progressBarRef.current.value;
+  }
 
   useEffect(
     function () {
-      audioRef.current.onloadedmetadata = function () {
-        console.log("asdasd");
-        progressRef.current.max = audioRef.current.duration;
-        progressRef.current.value = audioRef.current.currentTime;
-        rightSpan.current.textContent = fancyDurationFormat(
-          Math.round(audioRef.current.duration),
-        );
-      };
-
       if (audioRef.current.play()) {
-        setInterval(() => {
-          progressRef.current.value = audioRef.current.currentTime;
-          leftSpan.current.textContent = fancyDurationFormat(
-            Math.round(audioRef.current.currentTime),
-          );
+        setInterval(function () {
+          const currentTime = audioRef.current.currentTime;
+          setTimeProgress(currentTime);
+          progressBarRef.current.value = currentTime;
         }, 500);
       }
     },
-    [audioRef],
+    [audioRef, progressBarRef, setTimeProgress],
   );
-
-  function refreshBar() {
-    audioRef.current.currentTime = progressRef.current.value;
-    audioRef.current.play();
-  }
 
   return (
     <div className="flex w-full max-w-xl place-items-center gap-3 lg:max-w-lg">
-      <span className="hidden text-sm text-neutral-200 md:block" ref={leftSpan}>
-        0:00
+      <span className="hidden text-sm text-neutral-200 md:block">
+        {fancyDurationFormat(Math.round(timeProgress))}
       </span>
       <input
-        ref={progressRef}
+        ref={progressBarRef}
         type="range"
-        onChange={refreshBar}
+        defaultValue={0}
+        onChange={handleProgressChange}
         className="progressBar w-full"
       />
-      <span
-        className="hidden text-sm text-neutral-200 md:block"
-        ref={rightSpan}
-      >
-        0:00
+      <span className="hidden text-sm text-neutral-200 md:block">
+        {fancyDurationFormat(Math.round(duration))}
       </span>
     </div>
   );
 }
+
 export default ProgressBar;
