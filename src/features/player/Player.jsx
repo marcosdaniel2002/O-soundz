@@ -43,7 +43,7 @@ function Player() {
           />
           <NavbarFooter />
         </div>
-        <Playlist />
+        <Playlist audioRef={audioRef} />
       </div>
     </>
   );

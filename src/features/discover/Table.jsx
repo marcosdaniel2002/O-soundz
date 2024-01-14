@@ -4,7 +4,7 @@ import { useGetTopSongs } from "./useGetTopSongs";
 
 function Table() {
   const { isLoading, data } = useGetTopSongs();
-  console.log(data);
+
   if (isLoading)
     return (
       <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">

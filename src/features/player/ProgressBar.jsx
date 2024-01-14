@@ -8,10 +8,6 @@ function ProgressBar({
   duration,
   setTimeProgress,
 }) {
-  function handleProgressChange() {
-    audioRef.current.currentTime = progressBarRef.current.value;
-  }
-
   useEffect(
     function () {
       if (audioRef.current.play()) {
@@ -24,6 +20,10 @@ function ProgressBar({
     },
     [audioRef, progressBarRef, setTimeProgress],
   );
+
+  function handleProgressChange() {
+    audioRef.current.currentTime = progressBarRef.current.value;
+  }
 
   return (
     <div className="flex w-full max-w-xl place-items-center gap-3 lg:max-w-lg">
