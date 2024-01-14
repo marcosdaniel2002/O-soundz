@@ -5,11 +5,9 @@ import { FaStepForward } from "react-icons/fa";
 import { FaRepeat } from "react-icons/fa6";
 import { FaPause } from "react-icons/fa6";
 import ButtonPlayer from "../../ui/ButtonPlayer";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 
-function ControlsButtons({ audioRef }) {
-  const [isPlay, setIsPlay] = useState(false);
-
+function ControlsButtons({ audioRef, isPlay, setIsPlay }) {
   useEffect(
     function () {
       if (isPlay) {

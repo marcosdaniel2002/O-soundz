@@ -13,17 +13,19 @@ function Player() {
   const progressBarRef = useRef();
   const [timeProgress, setTimeProgress] = useState(0);
   const [duration, setDuration] = useState(0);
+  const [isPlay, setIsPlay] = useState(false);
 
   return (
     <>
       <div className="bg-neutral relative flex items-center justify-between bg-[#0f0f0f] lg:px-5">
-        <SongData />
+        <SongData currentSong={currentSong} />
         <div className="z-50 flex w-full flex-col items-center gap-3 md:flex-col-reverse md:py-5 lg:z-0">
           <DisplayTrack
             audioRef={audioRef}
             currentTrack={currentSong.track}
             setDuration={setDuration}
             progressBarRef={progressBarRef}
+            setIsPlay={setIsPlay}
           />
           <ProgressBar
             audioRef={audioRef}
@@ -36,6 +38,8 @@ function Player() {
             audioRef={audioRef}
             progressBarRef={progressBarRef}
             duration={duration}
+            isPlay={isPlay}
+            setIsPlay={setIsPlay}
           />
           <NavbarFooter />
         </div>
