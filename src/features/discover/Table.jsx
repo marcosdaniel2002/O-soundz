@@ -12,7 +12,10 @@ function Table() {
       </div>
     );
 
-  const tracks = data.tracks.items;
+  const tracks = data.tracks.items.filter(
+    (track) => track.track.preview_url != null,
+  );
+
   return (
     <table className="w-full">
       <thead>
