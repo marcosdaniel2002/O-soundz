@@ -11,10 +11,47 @@ const initialSong = {
 };
 
 function SongProvider({ children }) {
-  const [currentSong, setCurrentSong] = useState(initialSong);
+  const [playlist, setPlaylist] = useState(null);
+  const [indexSong, setIndexSong] = useState(0);
+
+  const currentSong = playlist?.tracks[indexSong];
+
+  function handlePlaySong(playlistOnScreen, indexSong) {
+    if (playlistOnScreen.id != playlist?.id) {
+      setPlaylist(playlistOnScreen);
+      setIndexSong(indexSong);
+    } else {
+      setIndexSong(indexSong);
+    }
+  }
+
+  function handleNext() {
+    if (indexSong >= playlist.tracks.length - 1) {
+      setIndexSong(0);
+    } else {
+      setIndexSong((prev) => prev + 1);
+    }
+  }
+
+  function handlePrevious() {
+    if (indexSong === 0) {
+      const lastIndexSong = playlist.tracks.length - 1;
+      setIndexSong(lastIndexSong);
+    } else {
+      setIndexSong((prev) => prev - 1);
+    }
+  }
 
   return (
-    <SongContext.Provider value={{ currentSong, setCurrentSong }}>
+    <SongContext.Provider
+      value={{
+        currentSong,
+        setIndexSong,
+        handlePlaySong,
+        handleNext,
+        handlePrevious,
+      }}
+    >
       {children}
     </SongContext.Provider>
   );

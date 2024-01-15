@@ -7,16 +7,15 @@ function ProgressBar({
   timeProgress,
   duration,
   setTimeProgress,
+  thereIsSong,
 }) {
   useEffect(
     function () {
-      if (audioRef.current.play()) {
-        setInterval(function () {
-          const currentTime = audioRef.current.currentTime;
-          setTimeProgress(currentTime);
-          progressBarRef.current.value = currentTime;
-        }, 500);
-      }
+      setInterval(function () {
+        const currentTime = audioRef.current.currentTime;
+        setTimeProgress(currentTime);
+        progressBarRef.current.value = currentTime;
+      }, 500);
     },
     [audioRef, progressBarRef, setTimeProgress],
   );
@@ -36,6 +35,7 @@ function ProgressBar({
         defaultValue={0}
         onChange={handleProgressChange}
         className="progressBar w-full"
+        disabled={!thereIsSong}
       />
       <span className="hidden text-sm text-neutral-200 md:block">
         {fancyDurationFormat(Math.round(duration))}

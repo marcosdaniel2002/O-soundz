@@ -4,8 +4,10 @@ function DisplayTrack({
   setDuration,
   progressBarRef,
   setIsPlay,
+  thereIsSong,
 }) {
   const onLoadedMetadata = () => {
+    if (!thereIsSong) return;
     const seconds = audioRef.current.duration;
     setDuration(seconds);
     progressBarRef.current.max = seconds;

@@ -1,9 +1,11 @@
 import TableRow from "./TableRow";
 import Spinner from "../../ui/Spinner";
 import { useGetTopSongs } from "./useGetTopSongs";
+import { useSong } from "../../context/SongContext";
 
 function Table() {
-  const { isLoading, data } = useGetTopSongs();
+  const { isLoading, data: playlist } = useGetTopSongs();
+  const { handlePlaySong } = useSong();
 
   if (isLoading)
     return (
@@ -11,10 +13,6 @@ function Table() {
         <Spinner size={16} />
       </div>
     );
-
-  const tracks = data.tracks.items.filter(
-    (track) => track.track.preview_url != null,
-  );
 
   return (
     <table className="w-full">
@@ -28,15 +26,16 @@ function Table() {
         </tr>
       </thead>
       <tbody>
-        {tracks.map((track, i) => (
+        {playlist.tracks.map((track, i) => (
           <TableRow
-            key={track.track.id}
-            id={track.track.id}
-            number={i}
-            name={track.track.name}
-            artist={track.track.artists.at(0).name}
-            image={track.track.album.images.at(2).url}
-            track={track.track.preview_url}
+            key={track.id}
+            index={i}
+            id={track.id}
+            name={track.name}
+            artist={track.artist}
+            image={track.image}
+            track={track.track}
+            handlePlaySong={() => handlePlaySong(playlist, i)}
           />
         ))}
       </tbody>

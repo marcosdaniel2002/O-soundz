@@ -7,16 +7,23 @@ import { FaPause } from "react-icons/fa6";
 import ButtonPlayer from "../../ui/ButtonPlayer";
 import { useEffect } from "react";
 
-function ControlsButtons({ audioRef, isPlay, setIsPlay }) {
+function ControlsButtons({
+  audioRef,
+  isPlay,
+  setIsPlay,
+  thereIsSong,
+  handleNext,
+  handlePrevious,
+}) {
   useEffect(
     function () {
-      if (isPlay) {
+      if (thereIsSong && isPlay) {
         audioRef.current.play();
-      } else {
+      } else if (thereIsSong && !isPlay) {
         audioRef.current.pause();
       }
     },
-    [audioRef, isPlay],
+    [audioRef, isPlay, thereIsSong],
   );
 
   return (
@@ -24,13 +31,17 @@ function ControlsButtons({ audioRef, isPlay, setIsPlay }) {
       <ButtonPlayer>
         <TbSwitch2 />
       </ButtonPlayer>
-      <ButtonPlayer>
+      <ButtonPlayer onClick={handlePrevious}>
         <FaBackwardStep />
       </ButtonPlayer>
-      <ButtonPlayer main={true} onClick={() => setIsPlay((prev) => !prev)}>
+      <ButtonPlayer
+        main={true}
+        onClick={() => setIsPlay((prev) => !prev)}
+        disabled={!thereIsSong}
+      >
         {isPlay ? <FaPause /> : <FaPlay />}
       </ButtonPlayer>
-      <ButtonPlayer>
+      <ButtonPlayer onClick={handleNext}>
         <FaStepForward />
       </ButtonPlayer>
       <ButtonPlayer>

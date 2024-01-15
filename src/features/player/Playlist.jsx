@@ -20,7 +20,7 @@ function Playlist({ audioRef }) {
         <MdOutlinePlaylistPlay />
       </ButtonPlayer>
       <ButtonPlayer onClick={() => setMuteVolume((prev) => !prev)}>
-        {muteVolume ? (
+        {muteVolume || volume < 2 ? (
           <HiVolumeOff />
         ) : volume < 40 ? (
           <FaVolumeDown />

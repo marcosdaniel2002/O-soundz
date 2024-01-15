@@ -37,7 +37,20 @@ export async function getTopGlobalPlaylist(apiKey, setApiKey) {
     }
 
     const data = await res.json();
-    return data;
+
+    const tracks = data.tracks.items
+      .filter((track) => track.track.preview_url != null)
+      .map((track) => {
+        return {
+          id: track.track.id,
+          name: track.track.name,
+          artist: track.track.artists.at(0).name,
+          image: track.track.album.images.at(2).url,
+          track: track.track.preview_url,
+        };
+      });
+
+    return { id: data.id, tracks };
   } catch (e) {
     console.error(e);
   }
