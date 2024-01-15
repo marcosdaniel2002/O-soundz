@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { fancyDurationFormat } from "../../helpers/fancyDurationFormat";
+import { fancyDurationFormat } from "../../helpers/helpers";
 
 function ProgressBar({
   audioRef,
@@ -38,7 +38,7 @@ function ProgressBar({
         disabled={!thereIsSong}
       />
       <span className="hidden text-sm text-neutral-200 md:block">
-        {fancyDurationFormat(Math.round(duration))}
+        {fancyDurationFormat(duration)}
       </span>
     </div>
   );

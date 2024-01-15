@@ -1,18 +1,22 @@
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
+import { shuffle } from "../helpers/helpers";
 
 const SongContext = createContext();
-
-const initialSong = {
-  name: "Agora Hills",
-  image: "https://i.scdn.co/image/ab67616d00004851a840032f14ab22da396e43cb",
-  track:
-    "https://p.scdn.co/mp3-preview/28f256dad9add6e7f56ef0b6af5b0e9febdc62bb?cid=fce12d1069294c4880302946c939cb82",
-  artist: "Doja Cat",
-};
 
 function SongProvider({ children }) {
   const [playlist, setPlaylist] = useState(null);
   const [indexSong, setIndexSong] = useState(0);
+  const [shufflePlaylist, setShufflePlayList] = useState(null);
+
+  useEffect(
+    function () {
+      if (playlist != null) {
+        const shuffleList = shuffle([...playlist.tracks]);
+        setShufflePlayList(shuffleList);
+      }
+    },
+    [playlist],
+  );
 
   const currentSong = playlist?.tracks[indexSong];
 
@@ -24,21 +28,74 @@ function SongProvider({ children }) {
       setIndexSong(indexSong);
     }
   }
-
-  function handleNext() {
-    if (indexSong >= playlist.tracks.length - 1) {
+  // false - true - false on ended
+  function handleNext(hardNext, isRepeat, isShuffle) {
+    if (
+      !isShuffle &&
+      !isRepeat &&
+      indexSong === playlist.tracks.length - 1 &&
+      !hardNext
+    ) {
+      const isLast = true;
+      return isLast;
+    } else if (
+      !isShuffle &&
+      (isRepeat || hardNext) &&
+      indexSong >= playlist.tracks.length - 1
+    ) {
       setIndexSong(0);
-    } else {
+    } else if (!isShuffle) {
       setIndexSong((prev) => prev + 1);
+    } else {
+      return handleShuffleNext(isRepeat, hardNext);
     }
   }
 
-  function handlePrevious() {
-    if (indexSong === 0) {
+  function handlePrevious(isShuffle = false) {
+    if (!isShuffle && indexSong === 0) {
       const lastIndexSong = playlist.tracks.length - 1;
       setIndexSong(lastIndexSong);
-    } else {
+    } else if (!isShuffle) {
       setIndexSong((prev) => prev - 1);
+    } else {
+      handleShufflePrev();
+    }
+  }
+
+  function handleShuffleNext(isRepeat, hardNext) {
+    const index = shufflePlaylist.findIndex(
+      (track) => track.id === currentSong.id,
+    );
+    if (!isRepeat && !hardNext && index === playlist.tracks.length - 1) {
+      const isLast = true;
+      return isLast;
+    } else if ((isRepeat || hardNext) && index >= playlist.tracks.length - 1) {
+      const nextSong = shufflePlaylist[0];
+      setIndexSong(
+        playlist.tracks.findIndex((track) => track.id === nextSong.id),
+      );
+    } else {
+      const nextSong = shufflePlaylist[index + 1];
+      setIndexSong(
+        playlist.tracks.findIndex((track) => track.id === nextSong.id),
+      );
+    }
+  }
+
+  function handleShufflePrev() {
+    const index = shufflePlaylist.findIndex(
+      (track) => track.id === currentSong.id,
+    );
+    if (index === 0) {
+      const lastSong = shufflePlaylist[playlist.tracks.length - 1];
+      setIndexSong(
+        playlist.tracks.findIndex((track) => track.id === lastSong.id),
+      );
+    } else {
+      const prevSong = shufflePlaylist[index - 1];
+      setIndexSong(
+        playlist.tracks.findIndex((track) => track.id === prevSong.id),
+      );
     }
   }
 

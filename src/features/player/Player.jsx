@@ -14,6 +14,8 @@ function Player() {
   const [timeProgress, setTimeProgress] = useState(0);
   const [duration, setDuration] = useState(0);
   const [isPlay, setIsPlay] = useState(false);
+  const [isShuffle, setIsShuffle] = useState(false);
+  const [isRepeat, setIsRepeat] = useState(false);
 
   const thereIsSong = currentSong != undefined;
 
@@ -29,6 +31,9 @@ function Player() {
             progressBarRef={progressBarRef}
             setIsPlay={setIsPlay}
             thereIsSong={thereIsSong}
+            handleNext={handleNext}
+            isRepeat={isRepeat}
+            isShuffle={isShuffle}
           />
           <ProgressBar
             audioRef={audioRef}
@@ -40,13 +45,15 @@ function Player() {
           />
           <ControlsButtons
             audioRef={audioRef}
-            progressBarRef={progressBarRef}
-            duration={duration}
             isPlay={isPlay}
             setIsPlay={setIsPlay}
+            thereIsSong={thereIsSong}
             handleNext={handleNext}
             handlePrevious={handlePrevious}
-            thereIsSong={thereIsSong}
+            isShuffle={isShuffle}
+            setIsShuffle={setIsShuffle}
+            isRepeat={isRepeat}
+            setIsRepeat={setIsRepeat}
           />
           <NavbarFooter />
         </div>

@@ -1,5 +1,5 @@
 import { FaPlay } from "react-icons/fa";
-import { TbSwitch2 } from "react-icons/tb";
+import { FaShuffle } from "react-icons/fa6";
 import { FaBackwardStep } from "react-icons/fa6";
 import { FaStepForward } from "react-icons/fa";
 import { FaRepeat } from "react-icons/fa6";
@@ -14,6 +14,10 @@ function ControlsButtons({
   thereIsSong,
   handleNext,
   handlePrevious,
+  isShuffle,
+  setIsShuffle,
+  isRepeat,
+  setIsRepeat,
 }) {
   useEffect(
     function () {
@@ -28,10 +32,13 @@ function ControlsButtons({
 
   return (
     <div className="flex items-center gap-2">
-      <ButtonPlayer>
-        <TbSwitch2 />
+      <ButtonPlayer
+        onClick={() => setIsShuffle((prev) => !prev)}
+        isActive={isShuffle}
+      >
+        <FaShuffle />
       </ButtonPlayer>
-      <ButtonPlayer onClick={handlePrevious}>
+      <ButtonPlayer onClick={() => handlePrevious(isShuffle)}>
         <FaBackwardStep />
       </ButtonPlayer>
       <ButtonPlayer
@@ -41,10 +48,13 @@ function ControlsButtons({
       >
         {isPlay ? <FaPause /> : <FaPlay />}
       </ButtonPlayer>
-      <ButtonPlayer onClick={handleNext}>
+      <ButtonPlayer onClick={() => handleNext(true, isRepeat, isShuffle)}>
         <FaStepForward />
       </ButtonPlayer>
-      <ButtonPlayer>
+      <ButtonPlayer
+        onClick={() => setIsRepeat((prev) => !prev)}
+        isActive={isRepeat}
+      >
         <FaRepeat />
       </ButtonPlayer>
     </div>
