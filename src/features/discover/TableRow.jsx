@@ -2,10 +2,18 @@ import { FaHeart } from "react-icons/fa";
 import { BiDotsHorizontalRounded } from "react-icons/bi";
 import { FaPlay } from "react-icons/fa";
 
+import SongAnimation from "../../ui/SongAnimation";
+import { useSong } from "../../context/SongContext";
+
 function TableRow({ index, id, name, artist, image, track, handlePlaySong }) {
+  const { currentSong } = useSong();
+  const isCurrentSong = currentSong?.id === id;
+
   return (
     <tr className="group/overlay odd:bg-neutral-700/30 hover:bg-neutral-600/40">
-      <td className="w-8 p-1.5 text-center text-xs text-white">{index + 1}</td>
+      <td className="w-8 p-1.5 text-center text-xs text-white">
+        {isCurrentSong ? <SongAnimation /> : index + 1}
+      </td>
       <td className="max-w-48 truncate p-1.5 text-xs text-white">
         <div className="flex items-center gap-4">
           <div className="relative size-11 min-w-11">
