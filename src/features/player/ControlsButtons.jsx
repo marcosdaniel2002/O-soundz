@@ -6,11 +6,10 @@ import { FaRepeat } from "react-icons/fa6";
 import { FaPause } from "react-icons/fa6";
 import ButtonPlayer from "../../ui/ButtonPlayer";
 import { useEffect } from "react";
+import { useSong } from "../../context/SongContext";
 
 function ControlsButtons({
   audioRef,
-  isPlay,
-  setIsPlay,
   thereIsSong,
   handleNext,
   handlePrevious,
@@ -19,6 +18,7 @@ function ControlsButtons({
   isRepeat,
   setIsRepeat,
 }) {
+  const { isPlay, setIsPlay } = useSong();
   useEffect(
     function () {
       if (thereIsSong && isPlay) {

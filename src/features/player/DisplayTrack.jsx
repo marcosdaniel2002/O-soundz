@@ -1,14 +1,16 @@
+import { useSong } from "../../context/SongContext";
+
 function DisplayTrack({
   audioRef,
   currentTrack,
   setDuration,
   progressBarRef,
-  setIsPlay,
   thereIsSong,
   handleNext,
   isRepeat,
   isShuffle,
 }) {
+  const { setIsPlay } = useSong();
   const onLoadedMetadata = () => {
     if (!thereIsSong) return;
     const seconds = Math.round(audioRef.current.duration);

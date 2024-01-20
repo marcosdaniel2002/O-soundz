@@ -6,26 +6,34 @@ import SongAnimation from "../../ui/SongAnimation";
 import { useSong } from "../../context/SongContext";
 
 function TableRow({ index, id, name, artist, image, track, handlePlaySong }) {
-  const { currentSong } = useSong();
+  const { currentSong, isPlay } = useSong();
   const isCurrentSong = currentSong?.id === id;
 
   return (
     <tr className="group/overlay odd:bg-neutral-700/30 hover:bg-neutral-600/40">
-      <td className="w-8 p-1.5 text-center text-xs text-white">
-        {isCurrentSong ? <SongAnimation /> : index + 1}
+      <td
+        className={`w-8 p-1.5 text-center text-xs ${
+          isCurrentSong ? "text-green-500" : "text-white"
+        }`}
+      >
+        {isCurrentSong && isPlay ? <SongAnimation /> : index + 1}
       </td>
-      <td className="max-w-48 truncate p-1.5 text-xs text-white">
+      <td className="max-w-48 truncate p-1.5 text-xs">
         <div className="flex items-center gap-4">
           <div className="relative size-11 min-w-11">
             <img src={image} alt="" />
             <button
               onClick={handlePlaySong}
-              className="invisible absolute top-0 flex size-full items-center justify-center bg-neutral-900/80 group-hover/overlay:visible"
+              className="invisible absolute top-0 flex size-full items-center justify-center bg-neutral-900/80 text-white group-hover/overlay:visible"
             >
               <FaPlay />
             </button>
           </div>
-          <div className="flex flex-col">
+          <div
+            className={`flex flex-col ${
+              isCurrentSong ? "text-green-500" : "text-white"
+            }`}
+          >
             <a className="hover:underline" href="">
               {name}
             </a>

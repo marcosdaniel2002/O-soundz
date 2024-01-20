@@ -1,4 +1,4 @@
-import { createContext, useContext, useEffect, useState } from "react";
+import { createContext, useContext, useMemo, useState } from "react";
 import { shuffle } from "../helpers/helpers";
 
 const SongContext = createContext();
@@ -6,13 +6,14 @@ const SongContext = createContext();
 function SongProvider({ children }) {
   const [playlist, setPlaylist] = useState(null);
   const [indexSong, setIndexSong] = useState(0);
-  const [shufflePlaylist, setShufflePlayList] = useState(null);
+  const [isPlay, setIsPlay] = useState(false);
 
-  useEffect(
+  const shufflePlaylist = useMemo(
     function () {
+      console.log("memo run");
       if (playlist != null) {
-        const shuffleList = shuffle([...playlist.tracks]);
-        setShufflePlayList(shuffleList);
+        console.log("there is playlist!");
+        return shuffle([...playlist.tracks]);
       }
     },
     [playlist],
@@ -107,6 +108,8 @@ function SongProvider({ children }) {
         handlePlaySong,
         handleNext,
         handlePrevious,
+        isPlay,
+        setIsPlay,
       }}
     >
       {children}
