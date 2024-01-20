@@ -1,19 +1,6 @@
 import TableRow from "./TableRow";
-import Spinner from "../../ui/Spinner";
-import { useGetTopSongs } from "./useGetTopSongs";
-import { useSong } from "../../context/SongContext";
 
-function Table() {
-  const { isLoading, data: playlist } = useGetTopSongs();
-  const { handlePlaySong } = useSong();
-
-  if (isLoading)
-    return (
-      <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
-        <Spinner size={16} />
-      </div>
-    );
-
+function Table({ handlePlaySong, playlist }) {
   return (
     <table className="w-full">
       <thead>

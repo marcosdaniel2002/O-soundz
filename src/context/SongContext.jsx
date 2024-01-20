@@ -1,4 +1,10 @@
-import { createContext, useContext, useMemo, useState } from "react";
+import {
+  createContext,
+  useCallback,
+  useContext,
+  useMemo,
+  useState,
+} from "react";
 import { shuffle } from "../helpers/helpers";
 
 const SongContext = createContext();
@@ -29,6 +35,7 @@ function SongProvider({ children }) {
       setIndexSong(indexSong);
     }
   }
+
   // false - true - false on ended
   function handleNext(hardNext, isRepeat, isShuffle) {
     if (
