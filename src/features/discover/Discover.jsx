@@ -16,7 +16,7 @@ function Discover() {
     );
 
   return (
-    <div className="px-4 pb-20 pt-8 lg:pb-8">
+    <div className="pb-20 lg:pb-8">
       <Header handlePlaySong={handlePlaySong} playlist={playlist} />
       <Table handlePlaySong={handlePlaySong} playlist={playlist} />
     </div>

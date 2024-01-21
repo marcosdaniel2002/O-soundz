@@ -4,8 +4,7 @@ import { useLocalStorageState } from "../../hooks/useLocalStorageState";
 
 export function useGetTopSongs() {
   const [apiKey, setApiKey] = useLocalStorageState(null, "spotify-key");
-  //   const { apiKey, getKey, isLoading: isLoadingKey } = useApiKey();
-  //   if (!apiKey) getKey().then();
+
   const { isLoading, data, error } = useQuery({
     queryKey: ["top-songs", apiKey],
     queryFn: () => getTopGlobalPlaylist(apiKey, setApiKey),

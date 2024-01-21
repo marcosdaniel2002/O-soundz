@@ -55,3 +55,29 @@ export async function getTopGlobalPlaylist(apiKey, setApiKey) {
     console.error(e);
   }
 }
+
+export async function getSongSearch(apiKey, setApiKey, query) {
+  try {
+    if (!query) return null;
+
+    const res = await fetch(
+      `https://api.spotify.com/v1/search?q=${query}&type=artist%2Ctrack`,
+      {
+        headers: {
+          Authorization: `Bearer ${apiKey}`,
+        },
+      },
+    );
+
+    if (!apiKey || res.status === 401) {
+      // api key expired
+      const token = await getApiKey();
+      setApiKey(token);
+    }
+    const data = await res.json();
+    console.log(data);
+    return null;
+  } catch (e) {
+    console.error(e);
+  }
+}
