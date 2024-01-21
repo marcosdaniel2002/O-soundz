@@ -7,12 +7,10 @@ export function useGetSongSearch() {
   const [params] = useSearchParams();
   const query = params.get("song");
 
-  if (!query) return;
-
   const [apiKey, setApiKey] = useLocalStorageState(null, "spotify-key");
 
   const { isLoading, data, error } = useQuery({
-    queryKey: ["search-songs", apiKey],
+    queryKey: ["search-songs", apiKey, query],
     queryFn: () => getSongSearch(apiKey, setApiKey, query),
   });
 

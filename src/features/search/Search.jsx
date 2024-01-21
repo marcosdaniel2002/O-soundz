@@ -3,10 +3,14 @@ import { FaCompactDisc } from "react-icons/fa";
 import { FaSearch } from "react-icons/fa";
 import { useGetSongSearch } from "./useGetSongSearch";
 import { useSearchParams } from "react-router-dom";
+import SongCard from "./SongCard";
+import { useSong } from "../../context/SongContext";
 
 function Search() {
   const [value, setValue] = useState("");
   const [params, setParams] = useSearchParams();
+  const { data: playlist } = useGetSongSearch();
+  const { handlePlaySong } = useSong();
 
   function handleSearchSong(e) {
     e.preventDefault();
@@ -28,12 +32,33 @@ function Search() {
           />
         </div>
       </form>
-      <div className="mt-5 flex flex-col items-center justify-center gap-5">
-        <FaCompactDisc className="animate-spin-slow text-9xl text-green-500" />
-        <span className="text-xl font-bold text-white">
-          Find your favorite songs or artists
-        </span>
-      </div>
+      {!playlist ? (
+        <div className="mt-5 flex flex-col items-center justify-center gap-5">
+          <FaCompactDisc className="animate-spin-slow text-9xl text-green-500" />
+          <span className="text-xl font-bold text-white">
+            Find your favorite songs or artists
+          </span>
+        </div>
+      ) : (
+        <main className="flex flex-col items-center gap-8">
+          <header>
+            <h2 className="text-2xl font-semibold text-green-400">
+              Search - {params.get("song")}
+            </h2>
+          </header>
+          <section className="grid grid-cols-2 gap-3 sm:gap-6 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5">
+            {playlist.tracks.map((track, i) => (
+              <SongCard
+                key={track.id}
+                name={track.name}
+                image={track.image}
+                artist={track.artist}
+                handlePlaySong={() => handlePlaySong(playlist, i)}
+              />
+            ))}
+          </section>
+        </main>
+      )}
     </div>
   );
 }

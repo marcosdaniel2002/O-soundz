@@ -58,10 +58,12 @@ export async function getTopGlobalPlaylist(apiKey, setApiKey) {
 
 export async function getSongSearch(apiKey, setApiKey, query) {
   try {
+    console.log("asdassd");
     if (!query) return null;
+    const Query = query.charAt(0).toUpperCase() + query.slice(1);
 
     const res = await fetch(
-      `https://api.spotify.com/v1/search?q=${query}&type=artist%2Ctrack`,
+      `https://api.spotify.com/v1/search?q=${Query}&type=track&limit=10`,
       {
         headers: {
           Authorization: `Bearer ${apiKey}`,
@@ -74,10 +76,37 @@ export async function getSongSearch(apiKey, setApiKey, query) {
       const token = await getApiKey();
       setApiKey(token);
     }
+
     const data = await res.json();
     console.log(data);
-    return null;
+    const dataFilter = data.tracks.items.filter(
+      (track) => track.preview_url != null,
+    );
+    const tracks = dataFilter.map((track) => {
+      return {
+        id: track.id,
+        name: track.name,
+        artist: track.artists
+          .map((artist, i, array) => {
+            if (array.length > 1) {
+              if (i === array.length - 2) return artist.name + " & ";
+              if (i === array.length - 1) return artist.name;
+              else return artist.name + ", ";
+            } else {
+              return artist.name;
+            }
+          })
+          .join(""),
+        image: track.album.images.at(0).url,
+        track: track.preview_url,
+      };
+    });
+
+    return { id: query, tracks };
   } catch (e) {
     console.error(e);
   }
 }
+
+// track.artists.some((artist) => artist.name === Query) ||
+//         (track.name === Query &&
