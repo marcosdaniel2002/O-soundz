@@ -8,6 +8,10 @@ function CollectionProvider({ children }) {
     { id: Date.now(), tracks: [] },
     "likes",
   );
+  const [selfPlaylists, setSelfPlaylists] = useLocalStorageState(
+    [],
+    "playlists",
+  );
 
   function handleToggleLikeSong(songObj, isLike) {
     if (isLike) {
@@ -33,8 +37,39 @@ function CollectionProvider({ children }) {
     });
   }
 
+  function handleCreatePlaylist(name) {
+    setSelfPlaylists((playlist) => [
+      ...playlist,
+      { id: Date.now(), name, tracks: [] },
+    ]);
+  }
+
+  function handleAddToPlaylist(playlist, track) {
+    if (!playlist.id) {
+      console.log("asdasdda");
+      setSelfPlaylists((prev) => [
+        ...prev,
+        { id: Date.now(), name: playlist.name, tracks: [track] },
+      ]);
+    } else {
+      setSelfPlaylists((playlists) =>
+        playlists.map((x) =>
+          x.id === playlist.id ? { ...x, tracks: [...x.tracks, track] } : x,
+        ),
+      );
+    }
+  }
+
   return (
-    <CollectionContext.Provider value={{ likesSongs, handleToggleLikeSong }}>
+    <CollectionContext.Provider
+      value={{
+        likesSongs,
+        handleToggleLikeSong,
+        selfPlaylists,
+        handleCreatePlaylist,
+        handleAddToPlaylist,
+      }}
+    >
       {children}
     </CollectionContext.Provider>
   );

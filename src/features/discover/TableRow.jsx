@@ -1,11 +1,11 @@
 import { FaHeart } from "react-icons/fa";
-import { BiDotsHorizontalRounded } from "react-icons/bi";
 import { FaPlay } from "react-icons/fa";
 
 import SongAnimation from "../../ui/SongAnimation";
 import { useSong } from "../../context/SongContext";
 import { useState } from "react";
 import { useCollection } from "../../context/CollectionContext";
+import ButtonMore from "../../ui/ButtonMore";
 
 function TableRow({ index, id, name, artist, image, track, handlePlaySong }) {
   const { currentSong, isPlay } = useSong();
@@ -66,9 +66,7 @@ function TableRow({ index, id, name, artist, image, track, handlePlaySong }) {
         </button>
       </td>
       <td className="w-12 text-center text-neutral-300">
-        <button className="h-full rounded-full p-1.5 hover:bg-neutral-600">
-          <BiDotsHorizontalRounded className="size-5" />
-        </button>
+        <ButtonMore track={{ id, name, image, artist, track }} />
       </td>
     </tr>
   );
