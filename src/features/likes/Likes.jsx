@@ -13,7 +13,7 @@ function Likes() {
 
   return (
     <div className="pb-20 lg:pb-8">
-      <Header />
+      <Header handlePlaySong={handlePlaySong} playlist={copyPlaylist.current} />
       {copyPlaylist.current.tracks.length === 0 ? (
         <Empty />
       ) : (

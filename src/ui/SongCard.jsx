@@ -28,7 +28,9 @@ function SongCard({ id, name, image, artist, handlePlaySong, track }) {
           className="absolute right-1 top-1 rounded-full bg-neutral-900/90 p-2 transition-opacity group-hover:opacity-100 lg:opacity-0"
           onClick={onToggleLike}
         >
-          <FaHeart className={`text-${isLike ? "green" : "slate"}-400/80`} />
+          <FaHeart
+            className={`${isLike ? "text-green-400/80" : "text-slate-400/80"}`}
+          />
         </button>
         <button className="absolute bottom-1 right-1 rounded-full bg-neutral-900/90 p-1.5 transition-opacity group-hover:opacity-100 lg:opacity-0">
           <MdMoreHoriz className="text-xl text-slate-400/80" />
