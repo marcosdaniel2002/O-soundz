@@ -1,8 +1,20 @@
 import { FaPlay } from "react-icons/fa";
 import { FaHeart } from "react-icons/fa";
 import { MdMoreHoriz } from "react-icons/md";
+import { useCollection } from "../context/CollectionContext";
+import { useState } from "react";
 
-function SongCard({ name, image, artist, handlePlaySong }) {
+function SongCard({ id, name, image, artist, handlePlaySong, track }) {
+  const { likesSongs, handleToggleLikeSong } = useCollection();
+  const [isLike, setIsLike] = useState(
+    likesSongs.tracks.some((song) => song.id === id),
+  );
+
+  function onToggleLike() {
+    handleToggleLikeSong({ id, name, image, artist, track }, !isLike);
+    setIsLike((prev) => !prev);
+  }
+
   return (
     <div className="group relative max-w-[250px] overflow-hidden rounded-xl shadow-xl lg:max-w-[288px]">
       <div className="relative">
@@ -12,8 +24,11 @@ function SongCard({ name, image, artist, handlePlaySong }) {
         >
           <FaPlay className="text-sm text-white lg:text-base" />
         </button>
-        <button className="absolute right-1 top-1 rounded-full bg-neutral-900/90 p-2 transition-opacity group-hover:opacity-100 lg:opacity-0">
-          <FaHeart className="text-slate-400/80" />
+        <button
+          className="absolute right-1 top-1 rounded-full bg-neutral-900/90 p-2 transition-opacity group-hover:opacity-100 lg:opacity-0"
+          onClick={onToggleLike}
+        >
+          <FaHeart className={`text-${isLike ? "green" : "slate"}-400/80`} />
         </button>
         <button className="absolute bottom-1 right-1 rounded-full bg-neutral-900/90 p-1.5 transition-opacity group-hover:opacity-100 lg:opacity-0">
           <MdMoreHoriz className="text-xl text-slate-400/80" />

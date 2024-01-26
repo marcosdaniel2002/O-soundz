@@ -4,10 +4,22 @@ import { FaPlay } from "react-icons/fa";
 
 import SongAnimation from "../../ui/SongAnimation";
 import { useSong } from "../../context/SongContext";
+import { useState } from "react";
+import { useCollection } from "../../context/CollectionContext";
 
 function TableRow({ index, id, name, artist, image, track, handlePlaySong }) {
   const { currentSong, isPlay } = useSong();
   const isCurrentSong = currentSong?.id === id;
+
+  const { likesSongs, handleToggleLikeSong } = useCollection();
+  const [isLike, setIsLike] = useState(
+    likesSongs.tracks.some((song) => song.id === id),
+  );
+
+  function onToggleLike() {
+    handleToggleLikeSong({ id, name, image, artist, track }, !isLike);
+    setIsLike((prev) => !prev);
+  }
 
   return (
     <tr className="group/overlay odd:bg-neutral-700/30 hover:bg-neutral-600/40">
@@ -44,8 +56,12 @@ function TableRow({ index, id, name, artist, image, track, handlePlaySong }) {
       <td className="hidden text-base text-neutral-400 lg:table-cell">
         {artist}
       </td>
-      <td className="w-12 text-center text-neutral-300">
-        <button className="group/like p-1.5">
+      <td
+        className={`w-12 text-center ${
+          isLike ? "text-green-500" : "text-neutral-300"
+        }`}
+      >
+        <button className="group/like p-1.5" onClick={onToggleLike}>
           <FaHeart className="size-5 transition-all group-hover/like:size-6" />
         </button>
       </td>

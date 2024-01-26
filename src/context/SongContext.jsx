@@ -1,10 +1,4 @@
-import {
-  createContext,
-  useCallback,
-  useContext,
-  useMemo,
-  useState,
-} from "react";
+import { createContext, useContext, useMemo, useState } from "react";
 import { shuffle } from "../helpers/helpers";
 
 const SongContext = createContext();
@@ -16,9 +10,7 @@ function SongProvider({ children }) {
 
   const shufflePlaylist = useMemo(
     function () {
-      console.log("memo run");
       if (playlist != null) {
-        console.log("there is playlist!");
         return shuffle([...playlist.tracks]);
       }
     },

@@ -45,7 +45,7 @@ export async function getTopGlobalPlaylist(apiKey, setApiKey) {
           id: track.track.id,
           name: track.track.name,
           artist: track.track.artists.at(0).name,
-          image: track.track.album.images.at(2).url,
+          image: track.track.album.images.at(0).url,
           track: track.track.preview_url,
         };
       });
@@ -58,7 +58,6 @@ export async function getTopGlobalPlaylist(apiKey, setApiKey) {
 
 export async function getSongSearch(apiKey, setApiKey, query) {
   try {
-    console.log("asdassd");
     if (!query) return null;
     const Query = query.charAt(0).toUpperCase() + query.slice(1);
 

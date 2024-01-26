@@ -3,7 +3,7 @@ import { FaCompactDisc } from "react-icons/fa";
 import { FaSearch } from "react-icons/fa";
 import { useGetSongSearch } from "./useGetSongSearch";
 import { useSearchParams } from "react-router-dom";
-import SongCard from "./SongCard";
+import SongCard from "../../ui/SongCard";
 import { useSong } from "../../context/SongContext";
 
 function Search() {
@@ -19,7 +19,7 @@ function Search() {
   }
 
   return (
-    <div className="mx-auto flex max-w-screen-2xl flex-col gap-8">
+    <div className="mx-auto flex max-w-screen-2xl flex-col gap-8 pb-20 lg:pb-8">
       <form onSubmit={handleSearchSong}>
         <div className="flex items-center gap-3 rounded-lg bg-white/90 p-3">
           <FaSearch className="text-xl" />
@@ -40,7 +40,7 @@ function Search() {
           </span>
         </div>
       ) : (
-        <main className="flex flex-col items-center gap-8">
+        <main className="mb-5 flex flex-col items-center gap-8">
           <header>
             <h2 className="text-2xl font-semibold text-green-400">
               Search - {params.get("song")}
@@ -50,9 +50,11 @@ function Search() {
             {playlist.tracks.map((track, i) => (
               <SongCard
                 key={track.id}
+                id={track.id}
                 name={track.name}
                 image={track.image}
                 artist={track.artist}
+                track={track.track}
                 handlePlaySong={() => handlePlaySong(playlist, i)}
               />
             ))}
