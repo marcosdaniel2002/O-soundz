@@ -46,9 +46,7 @@ function TableRow({ index, id, name, artist, image, track, handlePlaySong }) {
               isCurrentSong ? "text-green-500" : "text-white"
             }`}
           >
-            <a className="hover:underline" href="">
-              {name}
-            </a>
+            <a className="cursor-pointer hover:underline">{name}</a>
             <span className="text-neutral-300">{artist}</span>
           </div>
         </div>

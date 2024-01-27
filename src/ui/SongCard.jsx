@@ -3,12 +3,14 @@ import { MdMoreHoriz } from "react-icons/md";
 import { useCollection } from "../context/CollectionContext";
 import { useState } from "react";
 import ButtonPlaySong from "./ButtonPlaySong";
+import ToolTip from "./ToolTip";
 
 function SongCard({ id, name, image, artist, handlePlaySong, track }) {
   const { likesSongs, handleToggleLikeSong } = useCollection();
   const [isLike, setIsLike] = useState(
     likesSongs.tracks.some((song) => song.id === id),
   );
+  const [isToolTip, setIsToolTip] = useState(false);
 
   function onToggleLike() {
     handleToggleLikeSong({ id, name, image, artist, track }, !isLike);
@@ -27,9 +29,21 @@ function SongCard({ id, name, image, artist, handlePlaySong, track }) {
             className={`${isLike ? "text-green-400/80" : "text-slate-400/80"}`}
           />
         </button>
-        <button className="absolute bottom-1 right-1 rounded-full bg-neutral-900/90 p-1.5 transition-opacity group-hover:opacity-100 lg:opacity-0">
-          <MdMoreHoriz className="text-xl text-slate-400/80" />
-        </button>
+        <div className="absolute bottom-1 right-1">
+          <button
+            className="rounded-full bg-neutral-900/90 p-1.5 transition-opacity group-hover:opacity-100 lg:opacity-0"
+            onClick={() => setIsToolTip((prev) => !prev)}
+          >
+            <MdMoreHoriz className="text-xl text-slate-400/80" />
+          </button>
+          {isToolTip && (
+            <ToolTip
+              setIsToolTip={setIsToolTip}
+              track={{ id, name, image, artist, track }}
+              className="bottom-12 right-0"
+            />
+          )}
+        </div>
         <img src={image} alt={name} />
       </div>
       <div

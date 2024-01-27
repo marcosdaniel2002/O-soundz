@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { useCollection } from "../context/CollectionContext";
 
-function ToolTip({ setIsToolTip, track }) {
+function ToolTip({ setIsToolTip, track, className }) {
   const [optionsPlaylist, setOptionsPlaylist] = useState(false);
   const [value, setValue] = useState("");
   const { selfPlaylists, handleAddToPlaylist } = useCollection();
@@ -27,13 +27,17 @@ function ToolTip({ setIsToolTip, track }) {
 
   function onSubmit(e) {
     e.preventDefault();
+    if (!value) return;
     handleAddToPlaylist({ name: value }, track);
     setIsToolTip(false);
   }
 
   return (
     <div
-      className="absolute right-12 top-0 w-32 rounded-md bg-neutral-900 p-1 text-xs text-white shadow-2xl"
+      className={
+        "absolute z-50 w-32 rounded-md bg-neutral-900 p-1 text-xs text-white shadow-2xl " +
+        className
+      }
       ref={tooltip}
     >
       <ul className="[&>li]:cursor-pointer">
@@ -44,7 +48,7 @@ function ToolTip({ setIsToolTip, track }) {
           <span>Add to playlist</span>
           {optionsPlaylist && (
             <div
-              className="absolute right-32 top-0 w-32 rounded-md bg-neutral-900 p-1"
+              className="absolute right-32 top-0 max-h-[7.5rem] w-32 overflow-x-hidden overflow-y-scroll rounded-md bg-neutral-900 p-1"
               onClick={(e) => e.stopPropagation()}
             >
               <form action="" onSubmit={onSubmit}>
@@ -60,7 +64,7 @@ function ToolTip({ setIsToolTip, track }) {
                 <ul className="border-t-1 text-left [&>li]:cursor-pointer">
                   {selfPlaylists.map((playlist) => (
                     <li
-                      className="relative p-1.5 transition-all hover:bg-neutral-700"
+                      className="relative truncate p-1.5 transition-all hover:bg-neutral-700"
                       key={playlist.id}
                       onClick={() => {
                         handleAddToPlaylist(playlist, track);

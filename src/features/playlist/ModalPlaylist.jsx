@@ -8,12 +8,13 @@ function ModalPlaylist({ setModal }) {
 
   function onAddPlaylist(e) {
     e.preventDefault();
+    if (!value) return;
     handleCreatePlaylist(value);
     setModal(false);
   }
 
   return (
-    <div className="absolute top-0 flex size-full items-center justify-center bg-neutral-800 bg-opacity-70">
+    <div className="absolute top-0 z-50 flex size-full items-center justify-center bg-neutral-800 bg-opacity-70">
       <div className="w-[350px] rounded-xl border-2 border-neutral-500 border-opacity-40 bg-neutral-700 p-5">
         <div className="flex items-center justify-between">
           <h2 className="text-3xl font-medium text-neutral-200">

@@ -10,6 +10,7 @@ import Likes from "./features/likes/Likes";
 import Playlist from "./features/playlist/Playlist";
 import { SongProvider } from "./context/SongContext";
 import { CollectionProvider } from "./context/CollectionContext";
+import WatchPlaylist from "./features/playlist/WatchPlaylist";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -35,6 +36,10 @@ const router = createBrowserRouter([
       {
         path: "/playlist",
         element: <Playlist />,
+      },
+      {
+        path: "/playlist/:playlistId",
+        element: <WatchPlaylist />,
       },
       {
         path: "/likes",

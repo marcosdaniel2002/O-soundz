@@ -60,6 +60,12 @@ function CollectionProvider({ children }) {
     }
   }
 
+  function handleDeletePlaylist(id) {
+    setSelfPlaylists((playlists) =>
+      playlists.filter((playlist) => playlist.id !== id),
+    );
+  }
+
   return (
     <CollectionContext.Provider
       value={{
@@ -68,6 +74,7 @@ function CollectionProvider({ children }) {
         selfPlaylists,
         handleCreatePlaylist,
         handleAddToPlaylist,
+        handleDeletePlaylist,
       }}
     >
       {children}

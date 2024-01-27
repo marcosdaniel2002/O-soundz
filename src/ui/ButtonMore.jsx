@@ -13,7 +13,13 @@ function ButtonMore({ track }) {
       >
         <BiDotsHorizontalRounded className="size-5" />
       </button>
-      {isToolTip && <ToolTip setIsToolTip={setIsToolTip} track={track} />}
+      {isToolTip && (
+        <ToolTip
+          setIsToolTip={setIsToolTip}
+          track={track}
+          className={"right-12 top-0"}
+        />
+      )}
     </div>
   );
 }
