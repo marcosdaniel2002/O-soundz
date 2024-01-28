@@ -6,7 +6,7 @@ function AppLayout() {
   return (
     <div className="grid h-dvh grid-rows-[1fr_auto] md:grid-cols-[auto_1fr]">
       <Sidebar />
-      <main className="overflow-scroll px-4 pt-8 lg:px-8 lg:pt-12">
+      <main className="relative overflow-scroll px-4 pt-8 lg:px-8 lg:pt-12">
         <Outlet />
       </main>
 

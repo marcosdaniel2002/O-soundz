@@ -11,7 +11,12 @@ function ToolTip({ setIsToolTip, track, className }) {
   useEffect(
     function () {
       function handleClickOutside(e) {
-        if (tooltip.current && !tooltip.current.contains(e.target)) {
+        if (
+          tooltip.current &&
+          !tooltip.current.contains(e.target) &&
+          tooltip.current.previousElementSibling !== e.target.closest("button")
+        ) {
+          console.log("outside");
           setIsToolTip(false);
         }
       }
@@ -39,6 +44,7 @@ function ToolTip({ setIsToolTip, track, className }) {
         className
       }
       ref={tooltip}
+      onClick={(e) => e.stopPropagation()}
     >
       <ul className="[&>li]:cursor-pointer">
         <li

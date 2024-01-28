@@ -8,7 +8,7 @@ import NavLinkSidebar from "./NavLinkSidebar";
 
 function Sidebar() {
   return (
-    <nav className="before:shadow-before-nav hidden w-48 flex-col gap-6 bg-neutral-900/60 py-5 md:flex lg:w-56">
+    <nav className="hidden w-48 flex-col gap-6 bg-neutral-900/60 md:flex lg:w-56">
       <li>
         <img src="./o soundz.png" className="px-5" alt="" />
       </li>
