@@ -3,14 +3,19 @@ const client_secret = "9145423eb7404d88b6ff219c1974590f";
 
 export async function getApiKey() {
   try {
+    const bodyParams = new URLSearchParams();
+    bodyParams.append("grant_type", "client_credentials");
+    bodyParams.append("client_id", client_id);
+    bodyParams.append("client_secret", client_secret);
+
     const res = await fetch("https://accounts.spotify.com/api/token", {
       method: "POST",
-      body: "grant_type=client_credentials",
       headers: {
-        "Content-type": "application/x-www-form-urlencoded",
-        Authorization: "Basic " + btoa(client_id + ":" + client_secret),
+        "Content-Type": "application/x-www-form-urlencoded",
       },
+      body: bodyParams,
     });
+
     if (!res.ok) throw Error("Something went wrong with Api Key request!");
     const data = await res.json();
     return data.access_token;
@@ -38,6 +43,9 @@ export async function getTopGlobalPlaylist(apiKey, setApiKey) {
 
     const data = await res.json();
 
+    if (!data.tracks) {
+      return { id: "", tracks: [] };
+    }
     const tracks = data.tracks.items
       .filter((track) => track.track.preview_url != null)
       .map((track) => {
@@ -77,7 +85,7 @@ export async function getSongSearch(apiKey, setApiKey, query) {
     }
 
     const data = await res.json();
-    console.log(data);
+    console.log("data search", data);
     const dataFilter = data.tracks.items.filter(
       (track) => track.preview_url != null,
     );
@@ -126,6 +134,9 @@ export async function getTopGlobalPlaylistEcuador(apiKey, setApiKey) {
 
     const data = await res.json();
 
+    if (!data.tracks) {
+      return { id: "", tracks: [] };
+    }
     const tracks = data.tracks.items
       .filter((track) => track.track.preview_url != null)
       .map((track) => {
