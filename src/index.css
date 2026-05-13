@@ -8,12 +8,16 @@
 
     &:hover {
       @apply cursor-pointer;
-      &::-moz-range-progress {
-        @apply bg-green-500;
-      }
       &::-moz-range-thumb {
         @apply opacity-100;
       }
+      &::-webkit-slider-thumb {
+        @apply opacity-100;
+      }
+    }
+
+    &::-webkit-slider-thumb {
+      @apply size-3 appearance-none rounded-full border-none bg-white opacity-0;
     }
 
     &::-moz-range-thumb {
@@ -21,7 +25,7 @@
     }
 
     &::-moz-range-progress {
-      @apply bg-white;
+      @apply bg-green-500;
     }
   }
 

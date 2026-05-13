@@ -36,6 +36,9 @@ function Playlist({ audioRef }) {
         value={volume}
         onChange={(e) => setVolume(e.target.value)}
         className="progressBar w-32"
+        style={{
+          background: `linear-gradient(to right, #22c55e ${volume}%, #94a3b8 ${volume}%)`,
+        }}
       />
     </div>
   );

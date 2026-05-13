@@ -8,7 +8,7 @@ function Discover() {
   const { isLoading, data: playlist } = useGetTopSongs();
   const { handlePlaySong } = useSong();
 
-  if (isLoading)
+  if (isLoading || !playlist)
     return (
       <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
         <Spinner size={16} />

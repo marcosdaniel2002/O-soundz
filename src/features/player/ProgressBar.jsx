@@ -20,6 +20,8 @@ function ProgressBar({
     [audioRef, progressBarRef, setTimeProgress],
   );
 
+  const pct = duration > 0 ? (timeProgress / duration) * 100 : 0;
+
   function handleProgressChange() {
     audioRef.current.currentTime = progressBarRef.current.value;
   }
@@ -35,6 +37,9 @@ function ProgressBar({
         defaultValue={0}
         onChange={handleProgressChange}
         className="progressBar w-full"
+        style={{
+          background: `linear-gradient(to right, #22c55e ${pct}%, #94a3b8 ${pct}%)`,
+        }}
         disabled={!thereIsSong}
       />
       <span className="hidden text-sm text-neutral-200 md:block">
